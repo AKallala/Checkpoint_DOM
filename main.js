@@ -13,10 +13,16 @@ function minus(flavour, flavourText, parent) {
         var n = cart.get(flavour) - 1;
         cart.set(flavour, n);
         var newE = s.getElementsByClassName(flavour);
-        newE[0].firstElementChild.firstElementChild.innerHTML = flavourText + " x " + cart.get(flavour) + + " x " + 2 + "$";
+        newE[0].firstElementChild.firstElementChild.innerHTML = flavourText + " x " + cart.get(flavour) + " x " + 2 + "$";
+        t.firstElementChild.innerHTML = "Total price:" + total * 2 + "$";
     } else {
         parent.remove();
         cart.delete(flavour);
+        if (total == 0) {
+            t.firstElementChild.innerHTML = "";
+        } else {
+            t.firstElementChild.innerHTML = "Total price:" + total * 2 + "$";
+        }
     }
 }
 
@@ -25,7 +31,7 @@ function total_price() {
     total_price.appendChild(document.createTextNode("Total price:" + total * 2 + "$"));
     if (total == 1) {
         t.appendChild(total_price);
-    } else{
+    } else {
         t.firstElementChild.innerHTML = "Total price:" + total * 2 + "$";
     }
 }
@@ -70,12 +76,15 @@ function manageShoppingCard(flavour, flavourText) {
         total -= cart.get(flavour);
         newDiv.remove();
         cart.delete(flavour);
-        total_price();
+        if (total == 0) {
+            t.firstElementChild.innerHTML = "";
+        } else {
+            t.firstElementChild.innerHTML = "Total price:" + total * 2 + "$";
+        }
         enable_disable_plus_button();
     });
     b2.addEventListener('click', () => {
         minus(flavour, flavourText, newDiv);
-        total_price();
         enable_disable_plus_button();
     });
     return newDiv;
@@ -92,7 +101,7 @@ function add(flavour, flavourText) {
         cart.set(flavour, n);
         var newE = s.getElementsByClassName(flavour);
         newE[0].firstElementChild.firstElementChild.innerHTML = flavourText + " x " + cart.get(flavour) + " x " + 2 + "$";
-        total_price();
+        t.firstElementChild.innerHTML = "Total price:" + total * 2 + "$";
     }
 }
 
