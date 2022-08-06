@@ -2,6 +2,7 @@ var p = document.getElementsByClassName("plus");
 var flavours = document.getElementsByClassName("flavour");
 var s = document.getElementById("order");
 var submitButton = document.getElementsByClassName("submit");
+var heart_icon = document.getElementsByClassName("fa-heart");
 var cart = new Map();
 var total = 0;
 
@@ -127,13 +128,17 @@ Array.from(p).map((i) => {
 
 Array.from(submitButton).map((i) => {
     i.addEventListener('click', () => {
-        console.log(s.childElementCount);
-        var bound = s.childElementCount;
         s.innerHTML = "";
         cart.clear();
         total = 0;
         enable_disable_plus_button();
         alert("Your order has been succesfully submitted !");
+    });
+});
+
+Array.from(heart_icon).map((i) => {
+    i.addEventListener('click', () => {
+        i.classList.toggle("heart_clicked");
     });
 });
 

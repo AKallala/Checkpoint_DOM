@@ -63,6 +63,18 @@ header {
   margin-right: 15px;
 }
 
+.control_items i{
+  padding-right: 4px;
+}
+
+.fa-heart{
+  color: darkgray;
+}
+
+.heart_clicked{
+  color: salmon;
+}
+
 h3 {
   margin-left: 15px;
 }
