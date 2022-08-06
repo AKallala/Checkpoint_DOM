@@ -1,6 +1,7 @@
 var p = document.getElementsByClassName("plus");
 var flavours = document.getElementsByClassName("flavour");
 var s = document.getElementById("order");
+var t = document.getElementById("total_price");
 var submitButton = document.getElementsByClassName("submit");
 var heart_icon = document.getElementsByClassName("fa-heart");
 var cart = new Map();
@@ -12,10 +13,20 @@ function minus(flavour, flavourText, parent) {
         var n = cart.get(flavour) - 1;
         cart.set(flavour, n);
         var newE = s.getElementsByClassName(flavour);
-        newE[0].firstElementChild.firstElementChild.innerHTML = flavourText + " x " + cart.get(flavour);
+        newE[0].firstElementChild.firstElementChild.innerHTML = flavourText + " x " + cart.get(flavour) + + " x " + 2 + "$";
     } else {
         parent.remove();
         cart.delete(flavour);
+    }
+}
+
+function total_price() {
+    var total_price = document.createElement("h5");
+    total_price.appendChild(document.createTextNode("Total price:" + total * 2 + "$"));
+    if (total == 1) {
+        t.appendChild(total_price);
+    } else{
+        t.firstElementChild.innerHTML = "Total price:" + total * 2 + "$";
     }
 }
 
@@ -34,7 +45,7 @@ function manageShoppingCard(flavour, flavourText) {
     var newDiv2_1 = document.createElement("div");
     var newDiv2_2 = document.createElement("div");
     var paragraph = document.createElement("p");
-    var text = document.createTextNode(flavourText + " x " + 1);
+    var text = document.createTextNode(flavourText + " x " + 1 + " x " + 2 + "$");
     var icon = document.createElement("i");
     var b = document.createElement("button");
     var b2 = document.createElement("button");
@@ -59,10 +70,12 @@ function manageShoppingCard(flavour, flavourText) {
         total -= cart.get(flavour);
         newDiv.remove();
         cart.delete(flavour);
+        total_price();
         enable_disable_plus_button();
     });
     b2.addEventListener('click', () => {
         minus(flavour, flavourText, newDiv);
+        total_price();
         enable_disable_plus_button();
     });
     return newDiv;
@@ -73,11 +86,13 @@ function add(flavour, flavourText) {
     if (!cart.has(flavour)) {
         s.appendChild(manageShoppingCard(flavour, flavourText));
         cart.set(flavour, 1);
+        total_price();
     } else {
         var n = cart.get(flavour) + 1;
         cart.set(flavour, n);
         var newE = s.getElementsByClassName(flavour);
-        newE[0].firstElementChild.firstElementChild.innerHTML = flavourText + " x " + cart.get(flavour);
+        newE[0].firstElementChild.firstElementChild.innerHTML = flavourText + " x " + cart.get(flavour) + " x " + 2 + "$";
+        total_price();
     }
 }
 
@@ -132,6 +147,7 @@ Array.from(submitButton).map((i) => {
         cart.clear();
         total = 0;
         enable_disable_plus_button();
+        total_price();
         alert("Your order has been succesfully submitted !");
     });
 });
